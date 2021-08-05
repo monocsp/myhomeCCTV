@@ -52,9 +52,8 @@ class RTSPVideoWriterObject(object):
 
 if __name__ == '__main__':
     url = 'rtsp://admin:admin@192.168.0.5:554'
+    video_stream_widget = RTSPVideoWriterObject(url)
     currentTime = datetime.datetime.now();
-    video_stream_widget = RTSPVideoWriterObject(url,currentTime)
-
     while True:
         try:
             video_stream_widget.show_frame()
