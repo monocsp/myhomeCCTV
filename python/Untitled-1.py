@@ -2,6 +2,7 @@ from threading import Thread
 import datetime
 import cv2
 
+
 class RTSPVideoWriterObject(object):
     def __init__(self, src, startTime):
         # Create a VideoCapture object
@@ -11,8 +12,9 @@ class RTSPVideoWriterObject(object):
         self.frame_height = int(self.capture.get(4))
         self.fileName = startTime.strftime('%Y-%m-%d %H %M %S')
         # Set up codec and output video settings
-        self.codec = cv2.VideoWriter_fourcc('D','I','V','X')
-        self.output_video = cv2.VideoWriter('{}.avi'.format(str(self.fileName)), self.codec, 30, (self.frame_width, self.frame_height))
+        self.codec = cv2.VideoWriter_fourcc('D', 'I', 'V', 'X')
+        self.output_video = cv2.VideoWriter('{}.avi'.format(str(self.fileName)), self.codec, 30,
+                                            (self.frame_width, self.frame_height))
 
         # Start the thread to read frames from the video stream
         self.thread = Thread(target=self.update, args=())
@@ -37,21 +39,22 @@ class RTSPVideoWriterObject(object):
             self.output_video.release()
             cv2.destroyAllWindows()
             exit(1)
-    
+
     def dateChanged(self):
         self.capture.release()
         self.output_video.release()
         cv2.destroyAllWindows()
 
-
     def save_frame(self):
         # Save obtained frame into video output file
         self.output_video.write(self.frame)
-    
+
+
 if __name__ == '__main__':
     url = 'rtsp://admin:admin@192.168.0.5:554'
-    video_stream_widget = RTSPVideoWriterObject(url)
     currentTime = datetime.datetime.now();
+    video_stream_widget = RTSPVideoWriterObject(url,currentTime)
+
     while True:
         try:
             video_stream_widget.show_frame()
