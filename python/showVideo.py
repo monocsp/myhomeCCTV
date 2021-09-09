@@ -39,7 +39,7 @@ class RTSPVideoWriterObject(object):
 
 
 if __name__ == '__main__':
-    url = 'rtsp://admin:admin@192.168.0.5:554'
+    url = 'rtsp://admin:admin@192.168.0.2:554'
     currentTime = datetime.datetime.now();
     video_stream_widget = RTSPVideoWriterObject(url, currentTime)
     timer = threading.Timer(5, lambda: video_stream_widget.capture.release)
